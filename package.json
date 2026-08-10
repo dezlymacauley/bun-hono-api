@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "bun src/index.ts",
+    "dev": "bun --hot src/index.ts",
     "format": "prettier --write .",
     "clean": "rm -rf node_modules",
     "setup": "bun run clean && bun ci"
