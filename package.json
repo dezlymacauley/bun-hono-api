@@ -1,0 +1,19 @@
+{
+  "name": "bun-hono-postgres-api",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "bun src/index.ts",
+    "format": "prettier --write .",
+    "clean": "rm -rf node_modules",
+    "setup": "bun run clean && bun ci"
+  },
+  "dependencies": {
+    "hono": "^4.13.1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prettier": "^3.9.6"
+  }
+}

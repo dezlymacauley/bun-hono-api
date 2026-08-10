@@ -1,0 +1,3 @@
+[run]
+bun = true      # Ensures that scripts in `package.json` are run with bun
+silent = true   # Hides the commands of a script, and only shows the output

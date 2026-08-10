@@ -1,0 +1,22 @@
+# SECTION: Mise managed tools
+
+# 1. Node.js is required only for development
+# 2. To use `hurl` on Arch Linux, you need the package `libxml2-legacy`
+[tools]
+bun = "latest"
+hurl = "latest"
+node = "latest"
+
+#______________________________________________________________________________
+
+# SECTION: Mise tasks
+
+# 1. This requires the `tree` command to be installed on your system
+[tasks.tree]
+description = "🌲 Show a tree diagram of the project structure"
+quiet = true
+run = """
+tree -a -I ".git" --gitignore
+"""
+
+#______________________________________________________________________________
