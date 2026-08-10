@@ -1,6 +1,8 @@
 // Imports the `Hono` class from the hono package
 import { Hono } from "hono";
 
+import authorRoutes from "./routes/author.ts";
+
 // Defines the entry point of the server
 function main() {
   // Connection settings
@@ -12,10 +14,12 @@ function main() {
   // Creates a new instance of the `Hono` class
   const app = new Hono();
 
+  app.route("/authors", authorRoutes);
+
   // Sets up a basic route that returns text data
-  app.get("/", (c) => {
-    return c.text("Hello Hono!");
-  });
+  // app.get("/", (c) => {
+  //   return c.text("Hello Hono!");
+  // });
 
   // Displays the connection settings
   console.log("\nThe server is running on:");
