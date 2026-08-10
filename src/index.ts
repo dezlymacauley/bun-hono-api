@@ -1,4 +1,4 @@
-// Imports the `Hono` class
+// Imports the `Hono` class from the hono package
 import { Hono } from "hono";
 
 // Defines the entry point of the server
@@ -6,7 +6,7 @@ function main() {
   // Connection settings
   const protocol: string = "http";
   const host: string = "127.0.0.1";
-  const port: string = "4666";
+  const port: number = 4666;
   const url: string = `${protocol}://${host}:${port}`;
 
   // Creates a new instance of the `Hono` class
@@ -17,15 +17,15 @@ function main() {
     return c.text("Hello Hono!");
   });
 
+  // Displays the connection settings
+  console.log("\nThe server is running on:");
+  console.log(`${url}\n`);
+
   // Starts the server
   Bun.serve({
     port: port,
     fetch: app.fetch
   });
-
-  // Displays the connection settings
-  console.log("\nThe server is running on:");
-  console.log(`${url}\n`);
 }
 
 // Executes the `main` function
