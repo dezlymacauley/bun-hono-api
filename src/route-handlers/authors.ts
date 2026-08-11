@@ -21,9 +21,9 @@ const app = new Hono();
 type Author = {
   id: string;
   name: string;
-}
+};
 
-const authors: Array<Author> = [
+const authorsDatabase: Array<Author> = [
   {
     id: "5ed614ec-b3cb-4b37-9f19-4304e5574fd5",
     name: "Seth Baradock"
@@ -39,23 +39,43 @@ const authors: Array<Author> = [
 // This is the handler function for:
 // http://127.0.0.1:4666/authors
 app.get("/", (c) => {
-  return c.text("This is /authors");
+  // .json() accepts a variable that can be converted to JSON
+  // When a request is made to this endpoint,
+  // JSON will be returned to the caller.
+  return c.json(authorsDatabase);
 });
 
 //_____________________________________________________________________________
 
-// This is the handler function for:
-// http://127.0.0.1:4666/authors/one
-app.get("/one", (c) => {
-  return c.text("This is /authors/one");
-});
-
-//_____________________________________________________________________________
+// NOTE: This is a dynamic route
 
 // This is the handler function for:
-// http://127.0.0.1:4666/authors/two
-app.get("/two", (c) => {
-  return c.text("This is /authors/two");
+// http://127.0.0.1:4666/authors/:id
+//
+// `:id` is a variable that will be received from the request.
+// E.g. If this request is made
+// http://127.0.0.1:4666/authors/5ed614ec-b3cb-4b37-9f19-4304e5574fd5
+// Then `:id` is 5ed614ec-b3cb-4b37-9f19-4304e5574fd5
+app.get("/:id", (c) => {
+  // This is how you store the `:id` value from the request to a variable.
+  // This is the id requested by the caller of the API.
+  const id_requested: string = c.req.param("id");
+
+  // Check the database if an author with this id exists
+  // 1. If there is a match,
+  // then the data type of author will be an `Author` object
+  // 2. If there isn't a match,
+  // then the data type of author will be `undefined`.
+  const author: Author | undefined = authorsDatabase.find(
+    (a) => a.id === id_requested
+  );
+
+  if (author === undefined) {
+    // 404 is the http status code for not found
+    return c.json({error: "Author not found"}, 404);
+  }
+
+  return c.json(author);
 });
 
 //_____________________________________________________________________________
