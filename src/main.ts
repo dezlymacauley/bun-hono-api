@@ -18,6 +18,9 @@
 // Imports the `Hono` class from the hono package
 import { Hono } from "hono";
 
+// Import the handler function for the `/` route
+import rootRouteHandlerFunctions from "./routes/root.ts";
+
 // Import the handler functions for the `/authors` route
 import authorsRouteHandlerFunctions from "./routes/authors.ts";
 
@@ -32,7 +35,7 @@ function main() {
   // Creates a new instance of the `Hono` class
   const app = new Hono();
 
-  app.route("/", ???RouteHandlerFunctions);
+  app.route("/", rootRouteHandlerFunctions);
   app.route("/authors", authorsRouteHandlerFunctions);
 
   // Displays the connection settings
