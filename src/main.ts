@@ -26,6 +26,14 @@ import { rootRouteHandlers } from "./route-handlers/root";
 // Import the handler functions for the `/authors` route
 import { authorsRouteHandlers } from "./route-handlers/authors";
 
+//_____________________________________________________________________________
+
+// SECTION: In-memory database
+
+
+
+//_____________________________________________________________________________
+
 // Defines the entry point of the server
 function main() {
   // Connection settings
@@ -34,12 +42,10 @@ function main() {
   const port: number = 4666;
   const url: string = `${protocol}://${host}:${port}`;
 
-  // Creates a new instance of the `Hono` class
-  const app = new Hono();
-
-  // Adds the routes to the Hono instance
-  app.route("/", rootRouteHandlers);
-  app.route("/authors", authorsRouteHandlers);
+  // Creates a new instance of the `Hono` class and adds the routes
+  const app = new Hono()
+    .route("/", rootRouteHandlers)
+    .route("/authors", authorsRouteHandlers);
 
   // Displays the connection settings
   console.log("\nThe server is running on:");
