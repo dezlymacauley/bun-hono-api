@@ -20,10 +20,10 @@
 // Imports the `Hono` class from the hono package
 import { Hono } from "hono";
 
-// Import the handler function for the `/` route
+// Import the handler functions for the `/` route
 import { rootRouteHandlers } from "./route-handlers/root";
 
-// Import the handler function for the `/authors` route
+// Import the handler functions for the `/authors` route
 import { authorsRouteHandlers } from "./route-handlers/authors";
 
 // Defines the entry point of the server
@@ -37,7 +37,7 @@ function main() {
   // Creates a new instance of the `Hono` class
   const app = new Hono();
 
-  // Adds the routed Sets up the routes
+  // Adds the routes to the Hono instance
   app.route("/", rootRouteHandlers);
   app.route("/authors", authorsRouteHandlers);
 
