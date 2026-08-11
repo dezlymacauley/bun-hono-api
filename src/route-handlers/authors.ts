@@ -1,5 +1,5 @@
 /*
-  ABOUT: src/routes/authors.ts
+  ABOUT: src/route-handlers/authors.ts
 
   This file contains all the route handler functions for:
   http://127.0.0.1:4666/authors (including nested routes)
@@ -40,4 +40,4 @@ app.get("/two", (c) => {
 
 //_____________________________________________________________________________
 
-export default app;
+export const authorsRouteHandlers = app;

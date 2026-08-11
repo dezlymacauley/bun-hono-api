@@ -1,7 +1,7 @@
 /*
-  ABOUT: src/routes/root.ts
+  ABOUT: src/route-handlers/root.ts
 
-  This file contains the route handler function for:
+  This file contains the route handler functions for:
   http://127.0.0.1:4666/
 
 */
@@ -24,4 +24,4 @@ app.get("/", (c) => {
 
 //_____________________________________________________________________________
 
-export default app;
+export const rootRouteHandlers = app;

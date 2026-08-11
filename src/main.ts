@@ -4,12 +4,14 @@
   This file is the entry point of the API
 
   It purpose is to:
-  1. Imports the handler functions for all the routes.
-  2. Set up the connection settings that the server will use
-  3. Create a new instance of the `Hono` class
-  4. Add the routes to the `Hono` instance
-  5. Display the connection settings
-  6. Start the server
+  1. Create a `main` function to define the entry point of the application
+  2. Imports the handler functions for all the routes.
+  3. Set up the connection settings that the server will use
+  4. Create a new instance of the `Hono` class
+  5. Add the routes to the `Hono` instance
+  6. Display the connection settings
+  7. Start the server
+  8. Execute the application
 
 */
 
@@ -19,10 +21,10 @@
 import { Hono } from "hono";
 
 // Import the handler function for the `/` route
-import rootRouteHandlerFunctions from "./routes/root.ts";
+import { rootRouteHandlers } from "./route-handlers/root";
 
-// Import the handler functions for the `/authors` route
-import authorsRouteHandlerFunctions from "./routes/authors.ts";
+// Import the handler function for the `/authors` route
+import { authorsRouteHandlers } from "./route-handlers/authors";
 
 // Defines the entry point of the server
 function main() {
@@ -35,8 +37,9 @@ function main() {
   // Creates a new instance of the `Hono` class
   const app = new Hono();
 
-  app.route("/", rootRouteHandlerFunctions);
-  app.route("/authors", authorsRouteHandlerFunctions);
+  // Adds the routed Sets up the routes
+  app.route("/", rootRouteHandlers);
+  app.route("/authors", authorsRouteHandlers);
 
   // Displays the connection settings
   console.log("\nThe server is running on:");
