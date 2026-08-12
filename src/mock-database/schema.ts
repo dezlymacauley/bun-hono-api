@@ -24,21 +24,9 @@ export type AuthorsTable = Array<Author>;
 // SECTION: Database Schema
 
 // The database is an array of tables
-type DatabaseSchema = {
+export type DatabaseSchema = {
   // tableName: Data Type
   authors: AuthorsTable;
 }
 
 //_____________________________________________________________________________
-
-
-// export const authorsDatabase: Array<Author> = [
-//   {
-//     id: "5ed614ec-b3cb-4b37-9f19-4304e5574fd5",
-//     name: "Seth Baradock"
-//   },
-//   {
-//     id: "2221a287-b633-4473-950b-ba4e5b6e6632",
-//     name: "Cassie Elmore"
-//   }
-// ];
