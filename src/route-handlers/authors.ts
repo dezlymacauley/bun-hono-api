@@ -11,25 +11,13 @@
 // Imports the `Hono` class from the hono package
 import { Hono } from "hono";
 
-// Import the type definition for what how each author in the database 
-// should be represented.
-import type { Author } from "../in_memory_database";
+// Import the mock database, and the Author type
+import { mock_database, type Author } from "../mock-database"; 
 
 //_____________________________________________________________________________
 
 // Creates a new instance of the `Hono` class
-const app = new Hono<Env>();
-
-// const authorsDatabase: Array<Author> = [
-//   {
-//     id: "5ed614ec-b3cb-4b37-9f19-4304e5574fd5",
-//     name: "Seth Baradock"
-//   },
-//   {
-//     id: "2221a287-b633-4473-950b-ba4e5b6e6632",
-//     name: "Cassie Elmore"
-//   }
-// ];
+const app = new Hono();
 
 //_____________________________________________________________________________
 
@@ -38,8 +26,9 @@ const app = new Hono<Env>();
 app.get("/", (c) => {
   // .json() accepts a variable that can be converted to JSON
   // When a request is made to this endpoint,
-  // JSON will be returned to the caller.
-  return c.json(authorsDatabase);
+  // the `authors` table from the mock database will be returned to the 
+  // called as JSON data.
+  return c.json(mock_database.authors);
 });
 
 //_____________________________________________________________________________
@@ -58,20 +47,23 @@ app.get("/:id", (c) => {
   // This is the id requested by the caller of the API.
   const id_requested: string = c.req.param("id");
 
-  // Check the database if an author with this id exists
+  // Checks the `authors` table from the mock database to see if there is
+  // an author that matches the `id_requested`.
   // 1. If there is a match,
   // then the data type of author will be an `Author` object
   // 2. If there isn't a match,
   // then the data type of author will be `undefined`.
-  const author: Author | undefined = authorsDatabase.find(
+  const author: Author | undefined = mock_database.authors.find(
     (a) => a.id === id_requested
   );
 
+  // Error handling for when there is no match
   if (author === undefined) {
     // 404 is the http status code for not found
-    return c.json({error: "Author not found"}, 404);
+    return c.json({error: "No author matched the id requested"}, 404);
   }
 
+  // Returns the JSON data for that author that matches the `id_requested`
   return c.json(author);
 });
 
