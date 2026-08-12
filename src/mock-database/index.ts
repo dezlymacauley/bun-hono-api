@@ -12,14 +12,19 @@ import type { DatabaseSchema } from "./schema";
 import { seedAuthorsTable } from "./seed_data_authors_table";
 
 // Create a new mock database (which follows the structure of DatabaseSchema)
-const mock_database: DatabaseSchema = {
-  authors: seedAuthorsTable()
-};
+// Create a mock database function, that creates a new database that follows
+// the structure of the DatabaseSchema type.
+function createMockDatabase(): DatabaseSchema {
+  return {
+    authors: seedAuthorsTable()
+  };
+}
+
 
 //_____________________________________________________________________________
 
-// Allow the mock database to be used outside this file
-export { mock_database };
+// Allow the createMockDatabase function to be used outside this file
+export { createMockDatabase };
 
 // allow the data types that were defined in src/mock-database/schema.ts
 // to be used outside of this file.

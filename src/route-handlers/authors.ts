@@ -11,10 +11,13 @@
 // Imports the `Hono` class from the hono package
 import { Hono } from "hono";
 
-// Import the mock database, and the Author type
-import { mock_database, type Author } from "../mock-database"; 
+// Import the createMockDatabase function, and the Author type
+import { createMockDatabase , type Author, type DatabaseSchema } from "../mock-database"; 
 
 //_____________________________________________________________________________
+
+// Create a new instance of a mock database
+const mockMockDatabase: DatabaseSchema = createMockDatabase();
 
 // Creates a new instance of the `Hono` class
 const app = new Hono();
@@ -28,7 +31,7 @@ app.get("/", (c) => {
   // When a request is made to this endpoint,
   // the `authors` table from the mock database will be returned to the 
   // called as JSON data.
-  return c.json(mock_database.authors);
+  return c.json(mockMockDatabase.authors);
 });
 
 //_____________________________________________________________________________
@@ -53,7 +56,7 @@ app.get("/:id", (c) => {
   // then the data type of author will be an `Author` object
   // 2. If there isn't a match,
   // then the data type of author will be `undefined`.
-  const author: Author | undefined = mock_database.authors.find(
+  const author: Author | undefined = mockMockDatabase.authors.find(
     (a) => a.id === id_requested
   );
 
