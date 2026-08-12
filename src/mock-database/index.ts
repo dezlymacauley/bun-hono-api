@@ -8,12 +8,12 @@
 // Import the structure of the database
 import type { DatabaseSchema } from "./schema";
 
-// Import the initial data for the authors table
-import { authorsTable } from "./seed_data_authors_table";
+// Import the seedAuthorsTable function
+import { seedAuthorsTable } from "./seed_data_authors_table";
 
 // Create a new mock database (which follows the structure of DatabaseSchema)
 const mock_database: DatabaseSchema = {
-  authors: authorsTable
+  authors: seedAuthorsTable()
 };
 
 //_____________________________________________________________________________
