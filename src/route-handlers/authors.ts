@@ -11,28 +11,25 @@
 // Imports the `Hono` class from the hono package
 import { Hono } from "hono";
 
-// Creates a new instance of the `Hono` class
-const app = new Hono();
+// Import the type definition for what how each author in the database 
+// should be represented.
+import type { Author } from "../in_memory_database";
 
 //_____________________________________________________________________________
 
-// SECTION: In-memory database
+// Creates a new instance of the `Hono` class
+const app = new Hono<Env>();
 
-type Author = {
-  id: string;
-  name: string;
-};
-
-const authorsDatabase: Array<Author> = [
-  {
-    id: "5ed614ec-b3cb-4b37-9f19-4304e5574fd5",
-    name: "Seth Baradock"
-  },
-  {
-    id: "2221a287-b633-4473-950b-ba4e5b6e6632",
-    name: "Cassie Elmore"
-  }
-];
+// const authorsDatabase: Array<Author> = [
+//   {
+//     id: "5ed614ec-b3cb-4b37-9f19-4304e5574fd5",
+//     name: "Seth Baradock"
+//   },
+//   {
+//     id: "2221a287-b633-4473-950b-ba4e5b6e6632",
+//     name: "Cassie Elmore"
+//   }
+// ];
 
 //_____________________________________________________________________________
 
