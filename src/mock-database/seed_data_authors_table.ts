@@ -1,5 +1,5 @@
 /*
-  ABOUT: src/mock-database/authors_table_seed_data.ts
+  ABOUT: src/mock-database/seed_data_authors_table.ts
 
   Initial seed data for the authors table of the mock-database
 */
