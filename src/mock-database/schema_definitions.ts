@@ -1,17 +1,17 @@
 /*
-  ABOUT: src/mock-database/schema.ts
+  ABOUT: src/mock-database/schema_definitions.ts
 
-  
-  The variable types that define the database.
-
+  The purpose of this file is to create:
+  1. A data type to represent a specific row of a table in the database.
+  2. A data type to represent a specific table in the mock database.
+  3. A data types that represents the entire mock database.
 */
 
 //_____________________________________________________________________________
 
 // SECTION: Authors Table
 
-// Each author in the table will be saved as an object 
-// that contains the following fields.
+// Each row in the Authors table will contain data about an author
 export type Author = {
   id: string;
   name: string;
@@ -22,10 +22,10 @@ export type AuthorsTable = Array<Author>;
 
 //_____________________________________________________________________________
 
-// SECTION: Database Schema
+// SECTION: Mock Database
 
 // The database is an array of tables
-export type DatabaseSchema = {
+export type MockDatabase = {
   // tableName: Data Type
   authors: AuthorsTable;
 }

@@ -16,7 +16,7 @@ import {
   createMockDatabase,
   type Author,
   type DatabaseSchema
-} from "../mock-database";
+} from "../mock-database/mock_database_creation";
 
 //_____________________________________________________________________________
 

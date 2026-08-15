@@ -8,7 +8,7 @@
 */
 
 // Imports the AuthorsTable data type
-import type { AuthorsTable } from "./schema";
+import type { AuthorsTable } from "./schema_definitions";
 
 // This is a function that will create a new instance of an `AuthorsTable`,
 // that already contains initial data.
