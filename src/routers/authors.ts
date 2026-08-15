@@ -1,9 +1,8 @@
 /*
-  ABOUT: src/route-handlers/authors.ts
+  ABOUT: src/routers/authors.ts
 
-  This file contains all the route handler functions for:
-  http://127.0.0.1:4666/authors (including nested routes)
-
+  This file contains a router that will be configured to handle requests to:
+  http://127.0.0.1:4666/authors
 */
 
 //_____________________________________________________________________________
@@ -17,7 +16,6 @@ import type { MockDatabase } from "../mock-database/schema_definitions";
 // Imports the `createMockDatabase` function
 import { createMockDatabase } from "../mock-database/mock_database_creation";
 
-
 //_____________________________________________________________________________
 
 // Create a new instance of a mock database
@@ -25,13 +23,13 @@ import { createMockDatabase } from "../mock-database/mock_database_creation";
 const mockDatabase: MockDatabase = createMockDatabase();
 
 // Creates a new instance of the `Hono` class, for the `/authors` route.
-const authorsRoute = new Hono();
+export const authorsRouter = new Hono();
 
 //_____________________________________________________________________________
 
 // This is the handler function for:
 // http://127.0.0.1:4666/authors
-authorsRoute.get("/", (c) => {
+authorsRouter.get("/", (c) => {
   // .json() accepts a variable that can be converted to JSON
   // When a request is made to this endpoint,
   // the `authors` table from the mock database will be returned to the
@@ -40,8 +38,6 @@ authorsRoute.get("/", (c) => {
 });
 
 //_____________________________________________________________________________
-
-export const authorsRouteHandlers = authorsRoute;
 
 // NOTE: This is a dynamic route
 

@@ -1,7 +1,7 @@
 /*
-  ABOUT: src/route-handlers/root.ts
+  ABOUT: src/routers/root.ts
 
-  This file contains the route handler functions for:
+  This file contains a router that will be configured to handle requests to:
   http://127.0.0.1:4666/
 
 */
@@ -13,16 +13,14 @@ import { Hono } from "hono";
 
 // Creates a new instance of the `Hono` class, for the `/` 
 // (The root of the API)
-const rootRoute = new Hono();
+export const rootRouter = new Hono();
 
 //_____________________________________________________________________________
 
 // This is the handler function for:
 // http://127.0.0.1:4666/
-rootRoute.get("/", (c) => {
+rootRouter.get("/", (c) => {
   return c.text("This is /");
 });
 
 //_____________________________________________________________________________
-
-export const rootRouteHandlers = rootRoute;

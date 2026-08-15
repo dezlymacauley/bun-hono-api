@@ -20,11 +20,11 @@
 // Imports the `Hono` class from the hono package
 import { Hono } from "hono";
 
-// Import the handler functions for the `/` route
-import { rootRouteHandlers } from "./route-handlers/root";
+// Import the router for the `/` route
+import { rootRouter } from "./routers/root";
 
-// Import the handler functions for the `/authors` route
-import { authorsRouteHandlers } from "./route-handlers/authors";
+// Import the route for the `/authors` route
+import { authorsRouter } from "./routers/authors";
 
 //_____________________________________________________________________________
 
@@ -36,10 +36,13 @@ function main() {
   const port: number = 4666;
   const url: string = `${protocol}://${host}:${port}`;
 
-  // Creates a new instance of the `Hono` class and adds the routes
+  // Creates a new instance of the `Hono` class.
+  // This is the main router for the entire application.
+    
+    // and adds the routes
   const app = new Hono()
-    .route("/", rootRouteHandlers)
-    .route("/authors", authorsRouteHandlers);
+    .route("/", rootRouter)
+    .route("/authors", authorsRouter);
 
   // Displays the connection settings
   console.log("\nThe server is running on:");
