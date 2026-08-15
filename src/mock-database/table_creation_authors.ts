@@ -1,16 +1,18 @@
 /*
-  ABOUT: src/mock-database/seed_data_authors_table.ts
+  ABOUT: src/mock-database/table_creation_authors.ts
 
-  Initial seed data for the authors table of the mock-database
+  The purpose of this file is to create a function that will create a new
+  instance of an AuthorsTable.
+
 */
 
-// Imports the AuthorsTable type
+// Imports the AuthorsTable data type
 import type { AuthorsTable } from "./schema";
 
 // This is a function that will create a new instance of an `AuthorsTable`,
 // that already contains initial data.
 // The export keyword allows this function to be used outside of this file
-export function seedAuthorsTable(): AuthorsTable {
+export function createAuthorsTable(): AuthorsTable {
   return [
     {
       id: "5ed614ec-b3cb-4b37-9f19-4304e5574fd5",

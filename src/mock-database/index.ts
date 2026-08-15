@@ -6,20 +6,19 @@
 */
 
 // Import the structure of the database
-import type { DatabaseSchema } from "./schema";
+import type { DatabaseSchema } from "./schema.ts";
 
 // Import the seedAuthorsTable function
-import { seedAuthorsTable } from "./seed_data_authors_table";
+import { createAuthorsTable } from "./create_authors_table.ts";
 
 // Create a new mock database (which follows the structure of DatabaseSchema)
 // Create a mock database function, that creates a new database that follows
 // the structure of the DatabaseSchema type.
 function createMockDatabase(): DatabaseSchema {
   return {
-    authors: seedAuthorsTable()
+    authors: createAuthorsTable()
   };
 }
-
 
 //_____________________________________________________________________________
 
