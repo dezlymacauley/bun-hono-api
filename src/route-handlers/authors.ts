@@ -24,14 +24,14 @@ import { createMockDatabase } from "../mock-database/mock_database_creation";
 // const mockDatabase: DatabaseSchema = createMockDatabase();
 const mockDatabase: MockDatabase = createMockDatabase();
 
-// Creates a new instance of the `Hono` class
-const app = new Hono();
+// Creates a new instance of the `Hono` class, for the `/authors` route.
+const authorsRoute = new Hono();
 
 //_____________________________________________________________________________
 
 // This is the handler function for:
 // http://127.0.0.1:4666/authors
-app.get("/", (c) => {
+authorsRoute.get("/", (c) => {
   // .json() accepts a variable that can be converted to JSON
   // When a request is made to this endpoint,
   // the `authors` table from the mock database will be returned to the
@@ -41,7 +41,7 @@ app.get("/", (c) => {
 
 //_____________________________________________________________________________
 
-export const authorsRouteHandlers = app;
+export const authorsRouteHandlers = authorsRoute;
 
 // NOTE: This is a dynamic route
 
