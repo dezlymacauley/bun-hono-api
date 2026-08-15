@@ -1,6 +1,7 @@
 /*
   ABOUT: src/mock-database/schema.ts
 
+  
   The variable types that define the database.
 
 */

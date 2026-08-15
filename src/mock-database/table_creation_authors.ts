@@ -2,8 +2,9 @@
   ABOUT: src/mock-database/table_creation_authors.ts
 
   The purpose of this file is to create a function that will create a new
-  instance of an AuthorsTable.
+  instance of an AuthorsTable. 
 
+  The instance should also have some initial data for API testing.
 */
 
 // Imports the AuthorsTable data type
