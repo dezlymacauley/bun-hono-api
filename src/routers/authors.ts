@@ -34,7 +34,7 @@ export const authorsRouter = new Hono();
 
 //_____________________________________________________________________________
 
-// SECTION: Get /authors
+// SECTION: GET /authors
 
 // This is will handle requests to:
 // http://127.0.0.1:4666/authors
@@ -48,7 +48,7 @@ authorsRouter.get("/", (c) => {
 
 //_____________________________________________________________________________
 
-// SECTION: Get /authors[id]
+// SECTION: GET /authors[id]
 
 // This will handle dynamic requests to:
 // http://127.0.0.1:4666/authors/:id
@@ -220,6 +220,56 @@ authorsRouter.put(
 
 //_____________________________________________________________________________
 
-// SECTION: Delete /authors[id]
+// SECTION: DELETE /authors[id]
+
+authorsRouter.delete("/:id", (c) => {
+
+  // Extract the `id` value from the request
+  const idRequested = c.req.param("id");
+
+  // Find the index of the target author in the mock database
+  // that matches the idRequested.
+
+  // NOTE: The index is different from the id.
+
+  // The id is a unique identifier for the author
+  // The index is the position of the author's data in the table.
+  //
+  // E.g.
+  // [
+  //   {
+  //     id: "5ed614ec-b3cb-4b37-9f19-4304e5574fd5",
+  //     name: "Seth Baradock",
+  //     birthday: "2001-04-28"
+  //   },
+  //   {
+  //     id: "2221a287-b633-4473-950b-ba4e5b6e6632",
+  //     name: "Cassie Elmore",
+  //     birthday: null
+  //   }
+  // ];
+  //
+  // Seth Baradock's data is at index 0, 
+  // and Cassie Elmore's data is index 1
+
+  // findIndex returns the index number if there is a match,
+  // and if there is not match then it returns -1 
+
+  const authorIndex: number = mockDatabase.authors.findIndex(
+    (element) => element.id === idRequested
+  );
+
+  // Error handling for when there is no match
+  if (authorIndex === -1) {
+    // 404 is the HTTP status code for Not Found
+    return c.json({ error: "No author matched the id requested" }, 404);
+  }
+
+  // Delete the author from the database
+  // (authorIndex, 1) means "start from the authorIndex and delete 1 element"
+  mockDatabase.authors.splice(authorIndex, 1);
+
+  return c.body(null, 204);
+});
 
 //_____________________________________________________________________________
