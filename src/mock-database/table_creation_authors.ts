@@ -17,11 +17,13 @@ export function createAuthorsTable(): AuthorsTable {
   return [
     {
       id: "5ed614ec-b3cb-4b37-9f19-4304e5574fd5",
-      name: "Seth Baradock"
+      name: "Seth Baradock",
+      birthday: "2001-04-28"
     },
     {
       id: "2221a287-b633-4473-950b-ba4e5b6e6632",
-      name: "Cassie Elmore"
+      name: "Cassie Elmore",
+      birthday: null
     }
   ];
 }

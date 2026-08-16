@@ -15,6 +15,10 @@
 export type Author = {
   id: string;
   name: string;
+  // The standard format is ISO 8601 (YYYY-MM-DD):
+  // E.g. 2001-04-28
+  // birthday is optional
+  birthday: string | null;
 };
 
 // The AuthorsTable is an array of Author objects.

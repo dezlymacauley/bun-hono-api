@@ -15,6 +15,8 @@ import type { Author, MockDatabase } from "../mock-database/schema_definitions";
 
 // Imports the `createMockDatabase` function
 import { createMockDatabase } from "../mock-database/mock_database_creation";
+import { zValidator } from "@hono/zod-validator";
+import z from "zod";
 
 //_____________________________________________________________________________
 
@@ -72,3 +74,23 @@ authorsRouter.get("/:id", (c) => {
   // Returns the JSON object for the author that matches the `idRequested`
   return c.json(resultOfSearch);
 });
+
+//_____________________________________________________________________________
+
+// SECTION: POST requests /authors
+
+// const createAuthorSchema = z.object({
+//   name: z.string().min(1), 
+//   birthday: z.coerce.date().optional()
+// })
+//
+// authorsRouter.post("/", zValidator("json", createAuthorSchema), (c) => {
+//   const data = c.req.valid("json");
+//
+//   const author = { id: crypto.randomUUID(), ...data};
+//
+//   mockDatabase.authors.push(author);
+//
+//   // Returns the JSON object for the author that matches the `idRequested`
+//   return c.json(author, 201);
+// });
