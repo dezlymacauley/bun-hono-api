@@ -118,7 +118,9 @@ const authorCreationRequestSchema = z.object({
     .min(1, "Name must be longer than 1 character"),
 
   birthday: z
-    // TODO: Finish this
+    .iso.date({error: "Date must be in YYYY-MM-DD format"})
+    .nullable()
+    .default(null)
 });
 
 //
