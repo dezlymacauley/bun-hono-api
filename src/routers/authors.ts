@@ -34,7 +34,7 @@ export const authorsRouter = new Hono();
 
 //_____________________________________________________________________________
 
-// SECTION: GET /authors
+// SECTION: Get /authors
 
 // This is will handle requests to:
 // http://127.0.0.1:4666/authors
@@ -48,7 +48,7 @@ authorsRouter.get("/", (c) => {
 
 //_____________________________________________________________________________
 
-// SECTION: GET /authors[id]
+// SECTION: Get /authors[id]
 
 // This will handle dynamic requests to:
 // http://127.0.0.1:4666/authors/:id
@@ -129,10 +129,9 @@ const authorCreationRequestSchema = z.object({
 // zValidator("request data type", validation schema)
 authorsRouter.post(
   "/",
-  // This is why zValidator is called middleware. 
+  // This is why zValidator is called middleware.
   zValidator("json", authorCreationRequestSchema),
   (c) => {
-    
     const authorCreationData = c.req.valid("json");
 
     // Create a new author
@@ -140,7 +139,7 @@ authorsRouter.post(
     // and ...authorCreationData means that the rest of the fields from
     // the newAuthor will be filled in using the authorCreationData from
     // the request.
-    const newAuthor = {id: crypto.randomUUID(), ...authorCreationData};
+    const newAuthor = { id: crypto.randomUUID(), ...authorCreationData };
 
     mockDatabase.authors.push(newAuthor);
 
@@ -149,4 +148,78 @@ authorsRouter.post(
   }
 );
 
-// TODO: Implement Update and Delete
+//_____________________________________________________________________________
+
+// SECTION: Put /authors[id]
+
+/*  
+
+A PUT request sent to `/authors` will be used to update the data of an
+existing author from the authors table of the mock database 
+
+*/
+
+const authorUpdateRequestSchema = z.object({
+  // `name` should be an optional field for a PUT request
+  // because it is valid to send a PUT request that does not update
+  // the name field.
+  // update one field.
+  // E.g. An put request to update only the birthday
+  name: z.string().min(1, "Name must be longer than 1 character").optional(),
+
+  // The difference here is birthday should also be optional(),
+  // and should not have a default value.
+  birthday: z.iso
+    .date({ error: "Date must be in YYYY-MM-DD format" })
+    // nullable is still fine because you may want to remove the birthday
+    // of an existing user.
+    .nullable()
+    .optional()
+});
+
+authorsRouter.put(
+  "/:id",
+  zValidator("json", authorUpdateRequestSchema),
+  (c) => {
+    // Validate the incoming request body against authorUpdateRequestSchema
+    const authorUpdateData = c.req.valid("json");
+
+    // Extract the `id` value from the request
+    const idRequested = c.req.param("id");
+
+    // Checks the `authors` list from the mock database to see if there is
+    // an author that matches the `idRequested`.
+    // `.find()` iterates through each `element` (an Author object)
+    // and checks if `element.id` equals `idRequested`.
+    const resultOfSearch: Author | undefined = mockDatabase.authors.find(
+      (element) => {
+        return element.id === idRequested;
+      }
+    );
+
+    // Error handling for when there is no match
+    if (resultOfSearch === undefined) {
+      // 404 is the HTTP status code for Not Found
+      return c.json({ error: "No author matched the id requested" }, 404);
+    }
+
+    // If there is a match then update the fields of the author
+    // in the database
+    if (authorUpdateData.name !== undefined) {
+      resultOfSearch.name = authorUpdateData.name;
+    }
+
+    if (authorUpdateData.birthday !== undefined) {
+      resultOfSearch.birthday = authorUpdateData.birthday;
+    }
+
+    // Returns the JSON object for the author that matches the `idRequested`
+    return c.json(resultOfSearch, 200);
+  }
+);
+
+//_____________________________________________________________________________
+
+// SECTION: Delete /authors[id]
+
+//_____________________________________________________________________________
