@@ -15,8 +15,9 @@ import type { Author, MockDatabase } from "../mock-database/schema_definitions";
 
 // Imports the `createMockDatabase` function
 import { createMockDatabase } from "../mock-database/mock_database_creation";
-import { zValidator } from "@hono/zod-validator";
-import z from "zod";
+
+// Imports `z` from the zod package for data validation
+import { z } from "zod";
 
 //_____________________________________________________________________________
 
@@ -29,6 +30,8 @@ export const authorsRouter = new Hono();
 
 //_____________________________________________________________________________
 
+// SECTION: GET /authors
+
 // This is will handle requests to:
 // http://127.0.0.1:4666/authors
 authorsRouter.get("/", (c) => {
@@ -40,6 +43,8 @@ authorsRouter.get("/", (c) => {
 });
 
 //_____________________________________________________________________________
+
+// SECTION: GET /authors[id]
 
 // This will handle dynamic requests to:
 // http://127.0.0.1:4666/authors/:id
@@ -77,12 +82,45 @@ authorsRouter.get("/:id", (c) => {
 
 //_____________________________________________________________________________
 
-// SECTION: POST requests /authors
+// SECTION: POST /authors
 
-// const createAuthorSchema = z.object({
-//   name: z.string().min(1), 
-//   birthday: z.coerce.date().optional()
-// })
+/*  
+
+A POST request sent to `/authors` will be used to add a new author to the
+authors table of the mock database.
+
+This POST request that is sent to the API will contain a JSON object.
+
+You need to create an author creation request schema definition for 
+the JSON object that meets two standards:
+
+1. Data type checks
+The fields of the authorCreationRequestSchema must match the data types
+that were defined in mock-database/schema_definitions.ts`
+
+export type Author = {
+  id: string;
+  name: string;
+  birthday: string | null;
+};
+
+2. Data value checks
+And in addition to this, you can use the Zod validation library to further
+restrict what are valid values.
+
+E.g. 
+
+*/
+
+const authorCreationRequestSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name must be longer than 1 character"),
+
+  birthday: z
+    // TODO: Finish this
+});
+
 //
 // authorsRouter.post("/", zValidator("json", createAuthorSchema), (c) => {
 //   const data = c.req.valid("json");
