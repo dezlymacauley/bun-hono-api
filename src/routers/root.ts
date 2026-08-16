@@ -17,7 +17,7 @@ export const rootRouter = new Hono();
 
 //_____________________________________________________________________________
 
-// This is the handler function for:
+// This will handle requests to:
 // http://127.0.0.1:4666/
 rootRouter.get("/", (c) => {
   return c.text("This is /");

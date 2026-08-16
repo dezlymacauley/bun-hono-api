@@ -11,7 +11,7 @@
 import { Hono } from "hono";
 
 // Imports the `MockDatabase` data type
-import type { MockDatabase } from "../mock-database/schema_definitions";
+import type { Author, MockDatabase } from "../mock-database/schema_definitions";
 
 // Imports the `createMockDatabase` function
 import { createMockDatabase } from "../mock-database/mock_database_creation";
@@ -27,7 +27,7 @@ export const authorsRouter = new Hono();
 
 //_____________________________________________________________________________
 
-// This is the handler function for:
+// This is will handle requests to:
 // http://127.0.0.1:4666/authors
 authorsRouter.get("/", (c) => {
   // .json() accepts a variable that can be converted to JSON
@@ -39,38 +39,36 @@ authorsRouter.get("/", (c) => {
 
 //_____________________________________________________________________________
 
-// NOTE: This is a dynamic route
-
-// This is the handler function for:
+// This will handle dynamic requests to:
 // http://127.0.0.1:4666/authors/:id
 //
 // `:id` is a variable that will be received from the request.
-// E.g. If this request is made
-// http://127.0.0.1:4666/authors/5ed614ec-b3cb-4b37-9f19-4304e5574fd5
-// Then `:id` is 5ed614ec-b3cb-4b37-9f19-4304e5574fd5
-// app.get("/:id", (c) => {
-//   // This is how you store the `:id` value from the request to a variable.
-//   // This is the id requested by the caller of the API.
-//   const id_requested: string = c.req.param("id");
 //
-//   // Checks the `authors` table from the mock database to see if there is
-//   // an author that matches the `id_requested`.
-//   // `.find()` iterates through each `element` (an Author object)
-//   // and checks if `element.id` equals `id_requested`.
-//   const author: Author | undefined = mockMockDatabase.authors.find(
-//     (element) => {
-//       return element.id === id_requested;
-//     }
-//   );
-//
-//   // Error handling for when there is no match
-//   if (author === undefined) {
-//     // 404 is the http status code for not found
-//     return c.json({ error: "No author matched the id requested" }, 404);
-//   }
-//
-//   // Returns the JSON data for that author that matches the `id_requested`
-//   return c.json(author);
-// });
+// E.g. If this request is made:
+// http://127.0.0.1:4666/authors/abc123
+// Then `:id` is "abc123"
 
-//_____________________________________________________________________________
+authorsRouter.get("/:id", (c) => {
+  // This is how you store the `:id` value from the request to a variable.
+  // This is the id requested by the caller of the API.
+  const idRequested: string = c.req.param("id");
+
+  // Checks the `authors` list from the mock database to see if there is
+  // an author that matches the `idRequested`.
+  // `.find()` iterates through each `element` (an Author object)
+  // and checks if `element.id` equals `idRequested`.
+  const resultOfSearch: Author | undefined = mockDatabase.authors.find(
+    (element) => {
+      return element.id === idRequested;
+    }
+  );
+
+  // Error handling for when there is no match
+  if (resultOfSearch === undefined) {
+    // 404 is the HTTP status code for Not Found
+    return c.json({ error: "No author matched the id requested" }, 404);
+  }
+
+  // Returns the JSON object for the author that matches the `idRequested`
+  return c.json(resultOfSearch);
+});
