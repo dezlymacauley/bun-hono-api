@@ -3,15 +3,13 @@
 
   This file is the entry point of the API
 
-  It purpose is to:
-  1. Create a `main` function to define the entry point of the application
-  2. Imports the handler functions for all the routes.
-  3. Set up the connection settings that the server will use
-  4. Create a new instance of the `Hono` class
-  5. Add the routes to the `Hono` instance
-  6. Display the connection settings
-  7. Start the server
-  8. Execute the application
+  The purpose of this file is to:
+  1. Define the connections details in advance for the Bun Server.
+  2. Create a Hono App.
+  3. Define the routes of the API, 
+  and attach a router that will handle requests made to each route.
+  4. Create a Bun Server that uses the connection details,
+  and the uses the functionality of the Hono App to handle routing.
 
 */
 
@@ -28,32 +26,25 @@ import { authorsRouter } from "./routers/authors";
 
 //_____________________________________________________________________________
 
-// Defines the entry point of the server
-function main() {
-  // Connection settings
-  const protocol: string = "http";
-  const host: string = "127.0.0.1";
-  const port: number = 4666;
-  const url: string = `${protocol}://${host}:${port}`;
+// Connection settings
+const protocol: string = "http";
+const hostname: string = "127.0.0.1";
+const port: number = 4666;
+const url: string = `${protocol}://${hostname}:${port}`;
 
-  // Creates a new instance of the `Hono` class.
-  // This is the main router for the entire application.
-    
-    // and adds the routes
-  const app = new Hono()
-    .route("/", rootRouter)
-    .route("/authors", authorsRouter);
+// Creates a new instance of the `Hono` class called `honoApp`
+// This is where each route of the API defined, and attached to a hono Router
+// that has been configured to handle requests for that route.
+const honoApp = new Hono()
+  .route("/", rootRouter)
+  .route("/authors", authorsRouter);
 
-  // Displays the connection settings
-  console.log("\nThe server is running on:");
-  console.log(`${url}\n`);
+// Displays the connection settings
+console.log("\nThe server is running on:");
+console.log(`${url}\n`);
 
-  // Starts the server
-  Bun.serve({
-    port: port,
-    fetch: app.fetch
-  });
-}
-
-// Executes the `main` function
-main();
+// Starts a Bun Server with the hostname and port that were specified
+// in the variables, and delegates the handling of requests to the honoApp.
+// Note that `hostname, port` is short hand for:
+// hostname: hostname, port: port
+Bun.serve({ hostname, port, fetch: honoApp.fetch });
