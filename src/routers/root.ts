@@ -20,7 +20,7 @@ export const rootRouter = new Hono();
 // This will handle requests to:
 // http://127.0.0.1:4666/
 rootRouter.get("/", (c) => {
-  return c.text("This is /");
+  return c.text("This is the / route\n");
 });
 
 //_____________________________________________________________________________
