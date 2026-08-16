@@ -16,8 +16,12 @@ import type { Author, MockDatabase } from "../mock-database/schema_definitions";
 // Imports the `createMockDatabase` function
 import { createMockDatabase } from "../mock-database/mock_database_creation";
 
-// Imports `z` from the zod package for data validation
+// Imports `z` from the zod package to create data validation schemas.
 import { z } from "zod";
+
+// Imports the `zValidator` middleware that will allow Hono to use
+// data validation schemas when handling requests.
+import { zValidator } from "@hono/zod-validator";
 
 //_____________________________________________________________________________
 
@@ -113,24 +117,34 @@ E.g.
 */
 
 const authorCreationRequestSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be longer than 1 character"),
+  name: z.string().min(1, "Name must be longer than 1 character"),
 
-  birthday: z
-    .iso.date({error: "Date must be in YYYY-MM-DD format"})
+  birthday: z.iso
+    .date({ error: "Date must be in YYYY-MM-DD format" })
     .nullable()
     .default(null)
 });
 
-//
-// authorsRouter.post("/", zValidator("json", createAuthorSchema), (c) => {
-//   const data = c.req.valid("json");
-//
-//   const author = { id: crypto.randomUUID(), ...data};
-//
-//   mockDatabase.authors.push(author);
-//
-//   // Returns the JSON object for the author that matches the `idRequested`
-//   return c.json(author, 201);
-// });
+// The sytax for zValidator is:
+// zValidator("request data type", validation schema)
+authorsRouter.post(
+  "/",
+  // This is why zValidator is called middleware. 
+  zValidator("json", authorCreationRequestSchema),
+  (c) => {
+    
+    const authorCreationData = c.req.valid("json");
+
+    // Create a new author
+    // the id field will be auto-generated,
+    // and ...authorCreationData means that the rest of the fields from
+    // the newAuthor will be filled in using the authorCreationData from
+    // the request.
+    const newAuthor = {id: crypto.randomUUID(), ...authorCreationData};
+
+    mockDatabase.authors.push(newAuthor);
+
+    // 201 is the HTTP status code for created
+    return c.json(newAuthor, 201);
+  }
+);
