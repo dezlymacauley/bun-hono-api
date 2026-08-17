@@ -1,0 +1,16 @@
+services:
+db:
+  container_name: bun-hono-api-database
+  image: postgres:18.6-alpine3.24
+  environment:
+    POSTGRES_USER: ${DB_USER:-postgres}
+    POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+    POSTGRES_DB: ${DB_NAME:-bun_hono_api_database}
+  ports:
+    - "127.0.0.1:${DB_PORT:-5432}:5432"
+  volumes:
+    - pgdata:/var/lib/postgresql/data
+
+volumes:
+pgdata:
+  name: bun-hono-api-pgdata
