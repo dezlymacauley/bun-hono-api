@@ -1,0 +1,65 @@
+# ABOUT: compose.yaml
+
+# This file is used to start multiple Docker containers
+
+# _____________________________________________________________________________
+
+# To run this file, first make sure that the Docker service is running,
+# and that you are in the directory that contains this file.
+
+# Then run this command
+
+# docker compose up -d
+
+# The -d flag ensures that the containers run in the background so that the
+# terminal that executed the command is still usable.
+
+# _____________________________________________________________________________
+
+# To shutdown all containers (but keep the volumes aka the saved data),
+# run this command:
+
+# docker compose down
+
+# _____________________________________________________________________________
+
+# To shutdown all containers and delete the volumes (aka the saved data),
+# run this command:
+
+# docker compose down -v
+
+# _____________________________________________________________________________
+
+# `services:` - This section has to be named exactly like this
+# This is where you list the docker containers that your application requires
+services:
+  # `bun-hono-api-database` is a custom name for the container
+  # Docker prefers hyphens
+  bun-hono-api-database:
+    # `image` think of this as a receipe that will be used to create the
+    # contents of the container.
+    # The `postgres:18.6-bookworm` image will ensure that the container has:
+    # 1. The Linux Operating Debian stable installed (aka bookworm)
+    # 2. Postgres 18.6
+    image: postgres:18.6-bookworm
+    ports:
+      # Port number of host machine: port number of container
+      - "${DB_PORT}:5432"
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      # custom-name:/var/lib/postgresql
+      # Use hyphens for the custom-name
+      # Don't change the `/var/lib/postgresql` this is the location inside
+      # the Docker container that Postgres used to save data
+      - bun-hono-api-database:/var/lib/postgresql
+
+# This is the name of the volume that will be created on your host machine
+# It is linked to: volumes -> bun-hono-api-database:/var/lib/postgresql
+volumes:
+  # Don't forget the `:` colon at the end.
+  # This tells Docker to create the volume with the default settings for
+  # creating a volume.
+  bun-hono-api-database:

@@ -1,6 +1,21 @@
 # Bun Hono Postgres API
 _______________________________________________________________________________
 
+## Setup
+
+First ensure that Docker is running then run this command to start 
+the database
+```bash
+docker compose up -d
+```
+_______________________________________________________________________________
+
+Run this command to shutdown the database
+```bash
+docker compose down
+```
+_______________________________________________________________________________
+
 ## Starting the server
 
 To start the server, open a new terminal and run
