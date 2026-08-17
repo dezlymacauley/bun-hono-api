@@ -21,6 +21,8 @@ _______________________________________________________________________________
 - **prettier**
     - Applies a formatting standard specified in `prettier.config.js`to files
     in the project
+- **drizzle-kit**
+    - For performing database migrations
 _______________________________________________________________________________
 
 ### dependencies 
@@ -32,4 +34,6 @@ _______________________________________________________________________________
 - **@hono/zod-validator**
     - This is middleware that allows Hono to use the zod validation library
     when handling requests.
+- **drizzle-orm**
+    - For interacting with a Postgres database using TypeScript
 _______________________________________________________________________________
